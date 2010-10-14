@@ -1,0 +1,197 @@
+* What is Bronze?
+
+Bronze is a Model-oriented Content Management System.
+
+* What does that mean?
+
+CMS systems have been subject to the NIH (Not Invented Here) syndrom
+for a long time, there are tons of comparison tables on the internet
+on the several softwares available to implement that particular task.
+
+One characteristic that is present to almost all of them is the
+coupling between content modelling and content rendering. This appears
+in several different flavours, but the general consequences are:
+
+  a - The way the navigation works in the resulting website is highly
+      dependant on which models you are using, in fact, implementing a
+      unusual navigation structure in such CMS systems imply in not
+      being able to reuse most of the components.
+
+  b - Reuseable components also increase the coupling between the
+      model and the view in a way that you can only use them as a
+      whole.
+
+  c - The rendering process is also affected by this coupling in a way
+      that you usually can't reuse rendering components attached to
+      modified models in a reasonable way.
+
+* Is there some CMS that doesn't couple model and view?
+
+A few, most of them are highly complex solutions such as Alfresco or
+Zope.
+
+* How is Bronze different from Alfresco and Zope?
+
+First of all it has a requirement of being able to be used in a shared
+hosting environment, this means not running per-user daemons and
+services, understanding that the disk usage is very limited because it
+is not uncommon to have them on top of NFS setup, which means that any
+more advanced algorithm depending on disk usage would degrade very
+quickly.
+
+Second, Bronze is not a stand-alone application. It is a set of APIs
+with an administration interface available as a set of Catalyst
+Controllers that you might extend to offer in your application, but
+you are not required to.
+
+Third, Bronze uses KiokuDB which abstracts a lot of different
+databases, be them Relational or NoSQL, so you might run on a simple
+MySQL server available in the "el cheapo" hosting provider or even use
+Amazon Web Services as storage. And that is not defined by Bronze, but
+rather by which KiokuDB storage classes are available.
+
+And Finally, Bronze is not, at least from start, planned to support
+complex workflows and rules such as the ones Alfresco or Zope
+supports. If you need those kind of things then you should probably
+use them instead, since they were planned with that requirements in
+mind.
+
+* What does tha name "Bronze" means
+
+Bronze is a metal used to forge statues, which are usually made
+oriented by a model.
+
+* So how the architecture of Bronze looks like?
+
+The idea is actually quite simple: we define a set of classes that
+declare how our data looks like, we add inverted indexes for that data
+and we offer editing interface for each of those data formats.
+
+The content is not hierarchical but is subject to a set of predefined
+classes, so it does have a schema.
+
+The scenario is:
+
+ a) You create some content of an arbitrary declared type.
+ b) The content is stored using KiokuDB.
+ c) KiokuDB offeres Generalized Inverted Index for your data.
+ d) You use an specific editing interface for that type.
+ e) Your content is then available to the front-end to consume.
+
+Basically the really important stuff are the Content classes, which
+define how your data is going to be stored, and therefore, how they
+are going to be found.
+
+For the sake of convenience we are going to write Catalyst Controllers
+to provide an admin interface framework for that code. We should also
+provide reuseable Catalyst Controllers for the front-end side.
+
+In the end, the architecture looks like:
+
+                            ______________
+                           |              |
+                           |   KiokuDB    |
+                           |______________|
+                                  ^
+                                  |
+                            ______|_______
+                           |              |
+        ------------------>| Bronze Model |<---------------
+       |              |    |______________|   |            |
+       |              |                       |            |
+       |              |                       |            |           
+       |              |                       |            |           
+    ___|___     ______|_____               ___|___     ____|_______  
+   |       |   |            |             |       |   |            | 
+   | View  |<--| Controller |             | View  |<--| Controller | 
+   |_______|   |____________|             |_______|   |____________| 
+
+         Admin side                          Front-end side
+
+
+It's important to notice that you might be able to have the admin side
+as a different application then the front-end or just glue them
+together. We might even provide a stand-alone application as a side
+project, but we are not going to require it, as this might make things
+more complicated depending on the resource limitations you have
+(i.e. you might need to run a single FCGI process instead of one for
+admin and other for front-end)
+
+* What about identity management?
+
+That is probably the most important reason to build bronze as an
+API. This allows the use of any authentication and authorization
+mechanism, the bronze model will just receive the currently
+authenticated user object and use the standard API available in the
+Catalyst authentication framework, so you should be able to use any of
+the several available authentication and authorization plugins.
+
+* What about performance?
+
+In very simple sites this is mostly not an issue, since the number of
+visits is quite low. When you have a higher volume you can choose to
+use the KiokuDB<->DBIx::Class bridge which allow you to take more
+value from your relational database or simply use a remote service for
+the storage.
+
+Most importantly, using a caching reverse proxy before your front-end
+is probably the most effective way to enhance your performance for
+higher volumes.
+
+* What about generating static content?
+
+Since Bronze is not a stand-alone app, it's just a matter of
+implementing a front-end app that renders the static parts of your
+site, but remember, a caching reverse proxy will probably do a better
+job because even if the content is static you still need searching,
+comments and other interactive actions with the content, just take a
+look in how complex the code for Movable Type gets to support the
+static generation.
+
+* How is content identified?
+
+This is an important subject and is, most of the time, the root of the
+coupling between the rendering and the model of the content.
+
+Bronze doesn't try to build a universal naming scheme that will not
+cause the coupling, instead it just assumes the links will be stored
+with a private URI scheme that should be rewritten both in the admin
+interface as in the front-end interface.
+
+What that means is:
+
+  a) when you add a content, it receives an id (given by KiokuDB).
+  b) when you refer to content, you should use bronze://CONTENTID
+  c) the admin interface will rewrite all bronze://CONTENTID urls 
+     to the admin oriented access (for instance, to show images)
+  d) the front-end interface will also rewrite all the urls, but
+     it will do it according to the navigation map implemented in
+     that specific application.
+
+For instance:
+
+Let's consider you have a page and an image. The page includes the
+image and your schema tells you that the image is part of the page.
+
+The HTML for the page would be stored like:
+
+  <P>Image: <img src="bronze://DEADBEEF-AA33FFEE" /></P>
+
+The admin interface would, maybe, rewrite that as:
+
+  <P>Image: <img src="/admin/images/DEADBEEF-AA33FFEE/raw" /></P>
+
+While the front-end might decide to rewrite that as:
+
+  <P>Image: <img src="/section/page/img/userfriendlyname.jpg" /></P>
+
+Or even rewrite as:
+
+  <P>Image: <img src="http://my.cdn/DEADBEEF-AA33FFEE" /></P>
+
+If all public images are stored in a Content Distribution Network.
+
+As you might have noticed, the final url depends on the actual data
+and meta-data associated with the content. This means an extra cost
+for that translation so the results of that calculation should be
+subject to some sort of caching.
