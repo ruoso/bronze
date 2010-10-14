@@ -194,4 +194,4 @@ If all public images are stored in a Content Distribution Network.
 As you might have noticed, the final url depends on the actual data
 and meta-data associated with the content. This means an extra cost
 for that translation so the results of that calculation should be
-subject to some sort of caching.
+subject to some sort of caching in the object itself.
