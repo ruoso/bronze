@@ -21,10 +21,9 @@ Bronze::Types::Category isa L<Bronze::Types::Content>
 
 =item system_name
 
-A short, [a-zA-Z0-9_\-\/] based name for the category.
-
 Note that no logic is associated with subcategories, except that they
-share the same prefix in their names by using slashes.
+share the same prefix in their names by using slashes. This use the
+SystemName constraint.
 
 =cut
 
