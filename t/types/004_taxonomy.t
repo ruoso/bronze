@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use Test::More;
 
-BEGIN { use_ok('Bronze::Types::Category') }
+BEGIN { use_ok('Bronze::Types::Taxonomy') }
 
-my $c = Bronze::Types::Category->new({ lang => 'pt_BR',
+my $c = Bronze::Types::Taxonomy->new({ lang => 'pt_BR',
                                        owner => 'ruoso',
                                        group => 'users',
                                        permissions => 0644,

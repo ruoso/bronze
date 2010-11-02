@@ -1,7 +1,7 @@
 package Bronze::Types::Category;
 use Moose;
 use Bronze::Types::Constraints 'SystemName';
-extends 'Bronze::Types::Content';
+extends 'Bronze::Types::Taxonomy';
 
 =head1 NAME
 
@@ -13,32 +13,9 @@ This content defines the categories to be used in the application.
 
 =head1 HIERARCHY
 
-Bronze::Types::Category isa L<Bronze::Types::Content>
-
-=head1 ATTRIBUTES
-
-=over
-
-=item system_name
-
-Note that no logic is associated with subcategories, except that they
-share the same prefix in their names by using slashes. This use the
-SystemName constraint.
+Bronze::Types::Category isa L<Bronze::Types::Taxonomy>
 
 =cut
-
-has system_name => ( is => 'rw',
-                     isa => SystemName,
-                     coerce => 1 );
-
-=item display_name
-
-This is a free-form string to be used to identify the category.
-
-=cut
-
-has display_name => ( is => 'rw',
-                      isa => 'Str' );
 
 1;
 

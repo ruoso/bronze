@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use Test::More;
 
-BEGIN { use_ok('Bronze::Types::AppInfo') }
+BEGIN { use_ok('Bronze::Types::Config') }
 
-my $c = Bronze::Types::AppInfo->new({ lang => 'pt_BR',
+my $c = Bronze::Types::Config->new({ lang => 'pt_BR',
                                       owner => 'ruoso',
                                       group => 'users',
                                       permissions => 0644,
