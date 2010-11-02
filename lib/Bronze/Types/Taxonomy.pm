@@ -41,6 +41,15 @@ This is a free-form string to be used to identify the taxonomy.
 has display_name => ( is => 'rw',
                       isa => 'Str' );
 
+=item configuration
+
+This is where configuration specific to this taxonomy should be stored.
+
+=cut
+
+has configuration => ( is => 'rw',
+                       isa => 'Str' );
+
 1;
 
 __END__
