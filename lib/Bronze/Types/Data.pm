@@ -1,28 +1,28 @@
-package Bronze::Types::Content;
+package Bronze::Types::Data;
 use Moose;
 
 =head1 NAME
 
-Bronze::Types::Content - Base class for all Bronze Content
+Bronze::Types::Data - Base class for all Bronze Data
 
 =head1 DESCRIPTION
 
-The Content type is the superclass for all bronze types. It contains
+The Data type is the superclass for all bronze types. It contains
 just basic infraestructural attributes that should be present for
-every content. The features provided by this class are:
+every data. The features provided by this class are:
 
 =over
 
 =item Multi-language
 
-All content in Bronze is made to be multi-lingual. Locale-based
+All data in Bronze is made to be multi-lingual. Locale-based
 fallback should be used when a desired language is not present, the
 same way as HTTP content negotiation.
 
 =item Ownership and Basic UNIX-like permissions
 
-Bronze implements a UNIX-like permission set for content objects. The
-idea is that all content objects have a owner, a group and a bit set
+Bronze implements a UNIX-like permission set for data objects. The
+idea is that all data objects have a owner, a group and a bit set
 permission model in a rwxrwxrwx fashion.
 
 =back
@@ -33,7 +33,7 @@ permission model in a rwxrwxrwx fashion.
 
 =item lang
 
-The lang attribute defines the language of this content.
+The lang attribute defines the language of this data.
 
 =cut
 
@@ -42,14 +42,14 @@ has lang => ( is => 'rw',
 
 =item original
 
-When this content is a translation of another content it should point
-here which content it is. If this field is undef, it's underestood
+When this data is a translation of another data it should point
+here which data it is. If this field is undef, it's underestood
 that this is an original itself.
 
 =cut
 
 has original => ( is => 'rw',
-                  isa => 'Bronze::Types::Content',
+                  isa => 'Bronze::Types::Data',
                   weak_ref => 1 );
 
 =item translations
