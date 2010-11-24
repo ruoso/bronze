@@ -1,0 +1,10 @@
+digraph "Type Hierarchy" {
+        shape=Box;
+        Data -> AppInfo;
+        Data -> Content;
+        AppInfo -> Config;
+        AppInfo -> Taxonomy;
+        Taxonomy -> LayoutTag;
+        Taxonomy -> Tag;
+        Taxonomy -> Category;
+}
