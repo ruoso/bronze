@@ -40,6 +40,21 @@ coerce SystemName,
           split '/';
   };
 
+=item PublishStatus
+
+This is a constraint for the different states that a content might
+have.
+
+The states are: "draft", "ready", "published", "archived" and
+"deleted".
+
+=cut
+
+subtype PublishStatus,
+  as Str,
+  where { /^(:draft|ready|published|archived)$/ },
+  message { "Invalid publish status" };
+
 1;
 
 __END__
