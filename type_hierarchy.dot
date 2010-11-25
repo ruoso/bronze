@@ -1,10 +1,14 @@
 digraph "Type Hierarchy" {
-        shape=Box;
-        Data -> AppInfo;
-        Data -> Content;
-        AppInfo -> Config;
-        AppInfo -> Taxonomy;
-        Taxonomy -> LayoutTag;
-        Taxonomy -> Tag;
-        Taxonomy -> Category;
+        rankdir=BT;
+        AppInfo   -> Data;
+        Content   -> Data;
+        Config    -> AppInfo;
+        Taxonomy  -> AppInfo;
+        LayoutTag -> Taxonomy;
+        Tag       -> Taxonomy;
+        Category  -> Taxonomy;
+        Media     -> Content;
+        Image     -> Media;
+        Video     -> Media;
+        RawData   -> Media;
 }

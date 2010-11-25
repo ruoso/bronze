@@ -32,6 +32,42 @@ has status => ( is => 'rw',
                 isa => PublishStatus,
                 default => 'draft' );
 
+=item slug
+
+Slug defines the friendly name this content should be refered to.
+
+=cut
+
+has slug => ( is => 'rw',
+              isa => 'Str' );
+
+=item categories
+
+An array of strings with the categories associated with this content.
+
+=cut
+
+has categories => ( is => 'rw',
+                    isa => 'ArrayRef[Str]' );
+
+=item tags
+
+An array of strings with the tags associated with this content.
+
+=cut
+
+has tags => ( is => 'rw',
+              isa => 'ArrayRef[Str]' );
+
+=item layout_tags
+
+An array of strings with the layout annotations for this content.
+
+=cut
+
+has layout_tags => ( is => 'rw',
+                     isa => 'ArrayRef[Str]' );
+
 
 1;
 
