@@ -43,30 +43,30 @@ has slug => ( is => 'rw',
 
 =item categories
 
-An array of strings with the categories associated with this content.
+A set with the categories associated with this content.
 
 =cut
 
 has categories => ( is => 'rw',
-                    isa => 'ArrayRef[Str]' );
+                    isa => 'KiokuDB::Set' );
 
 =item tags
 
-An array of strings with the tags associated with this content.
+A set with the tags associated with this content.
 
 =cut
 
 has tags => ( is => 'rw',
-              isa => 'ArrayRef[Str]' );
+              isa => 'KiokuDB::Set' );
 
 =item layout_tags
 
-An array of strings with the layout annotations for this content.
+A set with the layout annotations for this content.
 
 =cut
 
 has layout_tags => ( is => 'rw',
-                     isa => 'ArrayRef[Str]' );
+                     isa => 'KiokuDB::Set' );
 
 
 1;
