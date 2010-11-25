@@ -11,4 +11,9 @@ digraph "Type Hierarchy" {
         Image     -> Media;
         Video     -> Media;
         RawData   -> Media;
+        HTML      -> Content;
+        Page      -> HTML;
+        Post      -> HTML;
+        Comment   -> HTML;
+        SimplePoll -> HTML;
 }
