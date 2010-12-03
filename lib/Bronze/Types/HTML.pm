@@ -1,5 +1,8 @@
 package Bronze::Types::HTML;
 use Moose;
+use HTML::TreeBuilder;
+use Text::Unaccent;
+use List::MoreUtils 'uniq';
 extends 'Bronze::Types::Content';
 
 =head1 NAME
@@ -46,12 +49,36 @@ This contains the media associated with this content.
 has media => ( is => 'rw',
                isa => 'KiokuDB::Set' );
 
+=back
+
+=head1 Indexing
+
+This type makes just a full "text" index on title and content.  It
+also uses Text::Unaccent to normalize the tokens. It will use
+HTML::Element->as_text to return the text tokens from the content
+field.
+
+=cut
+
+sub EXTRACT {
+    my $self = shift;
+    my $tree = HTML::TreeBuilder->new_from_content($self->content);
+    return { text => $self->_tokenize_words($tree->as_text, $self->title) };
+}
+
+sub _tokenize_words {
+    my $self = shift;
+    return
+      [ uniq # if dups appear after normalization
+        map { lc(unac_string('utf8', $_)) }
+        uniq # reduce the number of calls to unac_string
+        map { split qr/\s+/s, $_ }
+        @_ ];
+}
 
 1;
 
 __END__
-
-=back
 
 =head1 COPYRIGHT
 

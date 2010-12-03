@@ -107,11 +107,41 @@ has permissions => ( is => 'rw',
                      isa => 'Int' );
 
 
+=back
+
+=head1 Indexing
+
+The indexing turns the "permissions", "owner" and "group" into a
+"accessible" index key, which describes who can see this data. The
+index value will be "any" if anyone can see this content, "g:$group"
+for the group that can read and "u:$owner" for the user that can read
+the content.
+
+The lang is also indexed.
+
+=cut
+
+sub EXTRACT {
+    my $self = shift;
+
+    my @accessible;
+    if ($self->permissions & 0400) {
+        push @accessible, 'any';
+    } elsif ($self->permissions & 0040) {
+        push @accessible, 'g:'.$self->group;
+    } elsif ($self->permissions & 0004) {
+        push @accessible, 'u:'.$self->user;
+    }
+    return
+      {
+       lang => $self->lang,
+       @accessible ? ( accessible => \@accessible ) : (),
+      };
+}
+
 1;
 
 __END__
-
-=back
 
 =head1 COPYRIGHT
 

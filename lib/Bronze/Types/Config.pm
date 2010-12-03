@@ -42,9 +42,24 @@ has value => ( is => 'rw',
 
 1;
 
-__END__
-
 =back
+
+=head1 Indexing
+
+Objects of this type have the "configkey" with the "key" attribute.
+
+=cut
+
+sub EXTRACT {
+    my $self = shift;
+    return
+      {
+       configkey => $self->key,
+      };
+}
+
+
+__END__
 
 =head1 COPYRIGHT
 

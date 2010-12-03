@@ -69,11 +69,30 @@ has layout_tags => ( is => 'rw',
                      isa => 'KiokuDB::Set' );
 
 
+=back
+
+=head1 Indexing
+
+This type indexes: "status", "slug", "tags", "layout_tags" and
+"categories". All the taxonomies are indexed by their system_name.
+
+=cut
+
+sub EXTRACT {
+    my $self = shift;
+    return
+      {
+       status => $self->status,
+       slug   => $self->slug,
+       map { my $attr = $_;
+             [ map { $_->system_name } $self->$attr->members ] }
+       qw(tags layout_tags categories),
+      };
+}
+
 1;
 
 __END__
-
-=back
 
 =head1 COPYRIGHT
 
