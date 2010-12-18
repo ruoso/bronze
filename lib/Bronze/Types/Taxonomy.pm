@@ -2,6 +2,7 @@ package Bronze::Types::Taxonomy;
 use Moose;
 use Bronze::Types::Constraints 'SystemName';
 extends 'Bronze::Types::AppInfo';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -49,6 +50,8 @@ This is where configuration specific to this taxonomy should be stored.
 
 has configuration => ( is => 'rw',
                        isa => 'Str' );
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

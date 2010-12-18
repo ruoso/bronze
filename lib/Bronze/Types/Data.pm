@@ -1,5 +1,6 @@
 package Bronze::Types::Data;
 use Moose;
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -139,6 +140,7 @@ sub EXTRACT {
       };
 }
 
+__PACKAGE__->meta->make_immutable;
 1;
 
 __END__

@@ -2,6 +2,7 @@ package Bronze::Types::Category;
 use Moose;
 use Bronze::Types::Constraints 'SystemName';
 extends 'Bronze::Types::Taxonomy';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -16,6 +17,8 @@ This content defines the categories to be used in the application.
 Bronze::Types::Category isa L<Bronze::Types::Taxonomy>
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

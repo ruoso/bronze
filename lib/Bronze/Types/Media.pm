@@ -1,6 +1,7 @@
 package Bronze::Types::Media;
 use Moose;
 extends 'Bronze::Types::Content';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -38,6 +39,7 @@ output.
 has content_length => ( is => 'rw',
                         isa => 'Int' );
 
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

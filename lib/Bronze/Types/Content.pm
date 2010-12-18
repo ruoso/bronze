@@ -3,6 +3,7 @@ use Moose;
 extends 'Bronze::Types::Data';
 use Bronze::Types::Constraints 'PublishStatus';
 use DateTime;
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -90,6 +91,8 @@ sub EXTRACT {
       };
 }
 
+
+__PACKAGE__->meta->make_immutable;
 1;
 
 __END__

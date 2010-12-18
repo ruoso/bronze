@@ -2,6 +2,7 @@ package Bronze::Types::SimplePoll;
 use Moose;
 extends 'Bronze::Types::HTML';
 use DateTime;
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -39,6 +40,8 @@ number of votes.
 has poll_options => ( is => 'rw',
                       isa => 'HashRef[Int]' );
 
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

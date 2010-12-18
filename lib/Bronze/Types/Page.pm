@@ -1,6 +1,7 @@
 package Bronze::Types::Page;
 use Moose;
 extends 'Bronze::Types::HTML';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -26,6 +27,8 @@ This contains a small version of the page for display purposes.
 
 has abstract => ( is => 'rw',
                   isa => 'Str' );
+
+__PACKAGE__->meta->make_immutable;
 
 
 1;

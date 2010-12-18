@@ -2,6 +2,7 @@ package Bronze::Types::Post;
 use Moose;
 extends 'Bronze::Types::HTML';
 use DateTime;
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -38,6 +39,7 @@ This is the list of comments associated to this post.
 has comments => ( is => 'rw',
                   isa => 'KiokuDB::Set' );
 
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

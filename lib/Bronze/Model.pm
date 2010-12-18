@@ -1,8 +1,15 @@
 package Bronze::Model;
 use Moose;
+use Search::Gin::Query::Manual;
+use Search::Gin::Query::Set;
+use namespace::clean -except => 'meta';
 
 has user    => ( is => 'ro', required => 1 );
 has kiokudb => ( is => 'ro', required => 1 );
+
+
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -22,8 +29,8 @@ bronze. It should be understood as the actual API to the data.
   use Bronze::Model;
   my $b = Bronze::Model->new( user => $user,
                               kiokudb => $kiokudb );
-  $b->search({ words => [qw(foo bar baz)],
-               type  => 'Post' });
+  $b->search({ text => [qw(foo bar baz)],
+               type => 'Post' });
 
 =head1 REQUISITES
 
@@ -45,6 +52,17 @@ support the "id" and "roles" method.
 =item kiokudb
 
 This refers to the kiokudb instance that should be used.
+
+=back
+
+=head1 METHODS
+
+=over
+
+=item search
+
+This method encapsulates the building of the Search::GIN::Query in a
+simple hash, where the values 
 
 =back
 

@@ -4,6 +4,7 @@ use HTML::TreeBuilder;
 use Text::Unaccent;
 use List::MoreUtils 'uniq';
 extends 'Bronze::Types::Content';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -76,6 +77,7 @@ sub _tokenize_words {
         @_ ];
 }
 
+__PACKAGE__->meta->make_immutable;
 1;
 
 __END__

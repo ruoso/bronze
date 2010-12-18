@@ -2,6 +2,7 @@ package Bronze::Types::Comment;
 use Moose;
 extends 'Bronze::Types::HTML';
 use DateTime;
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -55,6 +56,7 @@ The authentication id used by the user
 has commentor_auth_id => ( is => 'rw',
                            isa => 'Str' );
 
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

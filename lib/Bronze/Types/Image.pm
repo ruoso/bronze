@@ -1,6 +1,7 @@
 package Bronze::Types::Image;
 use Moose;
 extends 'Bronze::Types::Media';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -48,6 +49,7 @@ has thumbnails => ( is => 'rw',
                     isa => 'KiokuDB::Set' );
 
 
+__PACKAGE__->meta->make_immutable;
 1;
 __END__
 

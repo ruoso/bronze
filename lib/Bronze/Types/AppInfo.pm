@@ -1,6 +1,7 @@
 package Bronze::Types::AppInfo;
 use Moose;
 extends 'Bronze::Types::Data';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -14,6 +15,11 @@ configuration.
 =head1 HIERARCHY
 
 Bronze::Types::AppInfo isa L<Bronze::Types::Data>
+
+=cut
+
+__PACKAGE__->meta->make_immutable;
+
 
 1;
 

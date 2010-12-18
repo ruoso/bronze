@@ -1,6 +1,7 @@
 package Bronze::Types::Constraints;
 use MooseX::Types::Moose qw(Str);
-use MooseX::Types -declare => ['SystemName'];
+use MooseX::Types -declare => [qw(SystemName PublishStatus)];
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -54,6 +55,9 @@ subtype PublishStatus,
   as Str,
   where { /^(:draft|ready|published|archived)$/ },
   message { "Invalid publish status" };
+
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

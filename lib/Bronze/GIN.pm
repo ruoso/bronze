@@ -3,6 +3,7 @@ use MRO::Compat;
 use Carp qw(croak);
 use Moose;
 with qw( Search::GIN::Extract Search::GIN::Keys::Deep );
+use namespace::clean -except => 'meta';
 
 sub extract_values {
     my ( $self, $obj, @args ) = @_;
@@ -56,6 +57,8 @@ sub _merge_extracted_values {
     }
 }
 
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

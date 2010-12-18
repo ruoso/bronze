@@ -1,6 +1,7 @@
 package Bronze::Types::Config;
 use Moose;
 extends 'Bronze::Types::AppInfo';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -39,6 +40,8 @@ This is a free-form string value to suit application-specific needs.
 
 has value => ( is => 'rw',
                isa => 'Str' );
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

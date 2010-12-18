@@ -1,6 +1,7 @@
 package Bronze::Types::RawData;
 use Moose;
 extends 'Bronze::Types::Media';
+use namespace::clean -except => 'meta';
 
 =head1 NAME
 
@@ -27,6 +28,7 @@ Display name to be used when offering the data to download.
 has display_name => ( is => 'rw',
                       isa => 'Str' );
 
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__
