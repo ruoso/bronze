@@ -1,11 +1,8 @@
 package Bronze::Types::Page;
+# ABSTRACT: An specific page
 use Moose;
 extends 'Bronze::Types::HTML';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::Page - An specific page
 
 =head1 DESCRIPTION
 
@@ -23,6 +20,8 @@ Bronze::Types::Page isa L<Bronze::Types::HTML>
 
 This contains a small version of the page for display purposes.
 
+=back
+
 =cut
 
 has abstract => ( is => 'rw',
@@ -32,12 +31,3 @@ __PACKAGE__->meta->make_immutable;
 
 
 1;
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

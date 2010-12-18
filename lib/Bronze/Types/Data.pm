@@ -1,10 +1,7 @@
 package Bronze::Types::Data;
+# ABSTRACT: Base class for all Bronze Data
 use Moose;
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::Data - Base class for all Bronze Data
 
 =head1 DESCRIPTION
 
@@ -142,11 +139,3 @@ sub EXTRACT {
 
 __PACKAGE__->meta->make_immutable;
 1;
-
-__END__
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

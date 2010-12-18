@@ -1,13 +1,10 @@
 package Bronze::Types::Content;
+# ABSTRACT: Superclass for the actual content
 use Moose;
 extends 'Bronze::Types::Data';
 use Bronze::Types::Constraints 'PublishStatus';
 use DateTime;
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Type::Content - Superclass for the actual content
 
 =head1 DESCRIPTION
 
@@ -64,13 +61,14 @@ has tags => ( is => 'rw',
 
 A set with the layout annotations for this content.
 
+
+=back
+
 =cut
 
 has layout_tags => ( is => 'rw',
                      isa => 'KiokuDB::Set' );
 
-
-=back
 
 =head1 Indexing
 
@@ -94,11 +92,3 @@ sub EXTRACT {
 
 __PACKAGE__->meta->make_immutable;
 1;
-
-__END__
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

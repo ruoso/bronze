@@ -1,12 +1,9 @@
 package Bronze::Types::Tag;
+# ABSTRACT: Content Layout configuration
 use Moose;
 use Bronze::Types::Constraints 'SystemName';
 extends 'Bronze::Types::Taxonomy';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Type::Tag - Content Layout configuration
 
 =head1 DESCRIPTION
 
@@ -23,12 +20,3 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

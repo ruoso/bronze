@@ -1,11 +1,8 @@
 package Bronze::Types::Image;
+# ABSTRACT: Support for image metadata
 use Moose;
 extends 'Bronze::Types::Media';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::Image - Support for image metadata
 
 =head1 DESCRIPTION
 
@@ -51,12 +48,3 @@ has thumbnails => ( is => 'rw',
 
 __PACKAGE__->meta->make_immutable;
 1;
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

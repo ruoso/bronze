@@ -1,4 +1,5 @@
 package Bronze::GIN;
+# ABSTRACT: Factory for GIN key exctractor
 use MRO::Compat;
 use Carp qw(croak);
 use Moose;
@@ -61,21 +62,3 @@ sub _merge_extracted_values {
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-__END__
-
-=head1 NAME
-
-Bronze::GIN - Factory for GIN key exctractor
-
-=head1 DESCRIPTION
-
-This module is used to centralize the definition of which keys should
-be indexed in Bronze. It delegates the extraction to the actual
-implementing type.
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

@@ -1,11 +1,8 @@
 package Bronze::Types::Media;
+# ABSTRACT: Base for all media files
 use Moose;
 extends 'Bronze::Types::Content';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::Media - Base for all media files
 
 =head1 DESCRIPTION
 
@@ -34,6 +31,8 @@ has content_type => ( is => 'rw',
 Media should have the content length saved in order to allow better
 output.
 
+=back
+
 =cut
 
 has content_length => ( is => 'rw',
@@ -42,12 +41,4 @@ has content_length => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-__END__
 
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

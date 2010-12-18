@@ -1,11 +1,8 @@
 package Bronze::Types::Config;
+# ABSTRACT: Application configuration
 use Moose;
 extends 'Bronze::Types::AppInfo';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Type::Config - Application configuration
 
 =head1 DESCRIPTION
 
@@ -18,8 +15,6 @@ identified by a simple key string.
 Bronze::Types::Config isa L<Bronze::Types::AppInfo>
 
 =head1 ATTRIBUTES
-
-Only two attributes are defined here.
 
 =over
 
@@ -36,6 +31,8 @@ has key => ( is => 'rw',
 
 This is a free-form string value to suit application-specific needs.
 
+=back
+
 =cut
 
 has value => ( is => 'rw',
@@ -44,8 +41,6 @@ has value => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-=back
 
 =head1 Indexing
 
@@ -64,8 +59,3 @@ sub EXTRACT {
 
 __END__
 
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

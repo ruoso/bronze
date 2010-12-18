@@ -1,11 +1,8 @@
 package Bronze::Types::Constraints;
+# ABSTRACT: Library of common type constraints
 use MooseX::Types::Moose qw(Str);
 use MooseX::Types -declare => [qw(SystemName PublishStatus)];
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Type::Constraints - Library of common type constraints
 
 =head1 DESCRIPTION
 
@@ -60,13 +57,3 @@ subtype PublishStatus,
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

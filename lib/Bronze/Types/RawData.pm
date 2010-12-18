@@ -1,11 +1,8 @@
 package Bronze::Types::RawData;
+# ABSTRACT: Support for raw data
 use Moose;
 extends 'Bronze::Types::Media';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::RawData - Support for raw data
 
 =head1 DESCRIPTION
 
@@ -23,6 +20,8 @@ Bronze::Types::RawData isa L<Bronze::Types::Media>
 
 Display name to be used when offering the data to download.
 
+=back
+
 =cut
 
 has display_name => ( is => 'rw',
@@ -31,12 +30,3 @@ has display_name => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

@@ -1,12 +1,9 @@
 package Bronze::Types::SimplePoll;
+# ABSTRACT: Simple poll
 use Moose;
 extends 'Bronze::Types::HTML';
 use DateTime;
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::SimplePoll - Simple poll
 
 =head1 DESCRIPTION
 
@@ -35,6 +32,8 @@ has poll_open => ( is => 'rw',
 This return the list of options to be presented, with the associated
 number of votes.
 
+=back
+
 =cut
 
 has poll_options => ( is => 'rw',
@@ -44,12 +43,3 @@ has poll_options => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

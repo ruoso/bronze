@@ -1,12 +1,9 @@
 package Bronze::Types::Post;
+# ABSTRACT: Time-oriented content
 use Moose;
 extends 'Bronze::Types::HTML';
 use DateTime;
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::Post - Time-oriented content
 
 =head1 DESCRIPTION
 
@@ -34,6 +31,8 @@ has post_date => ( is => 'rw',
 
 This is the list of comments associated to this post.
 
+=back
+
 =cut
 
 has comments => ( is => 'rw',
@@ -42,12 +41,3 @@ has comments => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

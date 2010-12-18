@@ -1,12 +1,9 @@
 package Bronze::Types::Taxonomy;
+# ABSTRACT: Base class for configuration of classification
 use Moose;
 use Bronze::Types::Constraints 'SystemName';
 extends 'Bronze::Types::AppInfo';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Type::Taxonomy - Base class for configuration of classification
 
 =head1 DESCRIPTION
 
@@ -46,6 +43,8 @@ has display_name => ( is => 'rw',
 
 This is where configuration specific to this taxonomy should be stored.
 
+=back
+
 =cut
 
 has configuration => ( is => 'rw',
@@ -54,13 +53,3 @@ has configuration => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

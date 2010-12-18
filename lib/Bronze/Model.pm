@@ -1,7 +1,10 @@
 package Bronze::Model;
+# ABSTRACT: The Model class for Bronze applications
 use Moose;
 use Search::Gin::Query::Manual;
 use Search::Gin::Query::Set;
+use MooseX::Method::Signatures;
+use aliased 'Moosex::Meta::Method::Transactional';
 use namespace::clean -except => 'meta';
 
 has user    => ( is => 'ro', required => 1 );
@@ -14,10 +17,6 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
-
-=head1 NAME
-
-Bronze::Model - The Model class for Bronze applications
 
 =head1 DESCRIPTION
 
@@ -39,8 +38,6 @@ extracted by Bronze::GIN.
 
 =head1 ATTRIBUTES
 
-This class has the following attributes:
-
 =over
 
 =item user
@@ -55,14 +52,10 @@ This refers to the kiokudb instance that should be used.
 
 =back
 
-=head1 METHODS
-
-=over
-
-=item search
+=method search
 
 This method encapsulates the building of the Search::GIN::Query in a
-simple hash, where the values 
+simple hash. It also adds the security verification.
 
 =back
 

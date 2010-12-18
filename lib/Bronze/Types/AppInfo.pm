@@ -1,11 +1,8 @@
 package Bronze::Types::AppInfo;
+# ABSTRACT: Infraestructural data
 use Moose;
 extends 'Bronze::Types::Data';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Type::Config - Infraestructural data
 
 =head1 DESCRIPTION
 
@@ -22,13 +19,3 @@ __PACKAGE__->meta->make_immutable;
 
 
 1;
-
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

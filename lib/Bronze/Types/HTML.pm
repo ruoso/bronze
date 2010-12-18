@@ -1,14 +1,11 @@
 package Bronze::Types::HTML;
+# ABSTRACT: Base for all text content
 use Moose;
 use HTML::TreeBuilder;
 use Text::Unaccent;
 use List::MoreUtils 'uniq';
 extends 'Bronze::Types::Content';
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::HTML - Base for all text content
 
 =head1 DESCRIPTION
 
@@ -79,11 +76,3 @@ sub _tokenize_words {
 
 __PACKAGE__->meta->make_immutable;
 1;
-
-__END__
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.

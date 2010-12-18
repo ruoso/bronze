@@ -1,12 +1,9 @@
 package Bronze::Types::Comment;
+# ABSTRACT: User generated content
 use Moose;
 extends 'Bronze::Types::HTML';
 use DateTime;
 use namespace::clean -except => 'meta';
-
-=head1 NAME
-
-Bronze::Types::Comment - User generated content
 
 =head1 DESCRIPTION
 
@@ -51,6 +48,8 @@ has commentor_auth_realm => ( is => 'rw',
 
 The authentication id used by the user
 
+=back
+
 =cut
 
 has commentor_auth_id => ( is => 'rw',
@@ -59,12 +58,3 @@ has commentor_auth_id => ( is => 'rw',
 __PACKAGE__->meta->make_immutable;
 
 1;
-__END__
-
-=back
-
-=head1 COPYRIGHT
-
-Copyright 2010 Daniel Ruoso <daniel@ruoso.com>
-
-This module is distributed under the same terms of Perl itself.
