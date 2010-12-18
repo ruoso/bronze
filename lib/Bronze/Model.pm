@@ -4,13 +4,33 @@ use Moose;
 use Search::GIN::Query::Manual;
 use Search::GIN::Query::Set;
 use MooseX::Method::Signatures;
-use aliased 'MooseX::Meta::Method::Transactional';
 use namespace::clean -except => 'meta';
+use Module::Load;
 use List::Util qw(first);
 
-has user    => ( is => 'ro', required => 1 );
+has user    => ( is => 'ro', required => 0 );
 has schema  => ( is => 'ro', required => 1,
-                 handles => [qw(lookup new_scope)]);
+                 handles => [qw(store lookup new_scope)]);
+
+=method object
+
+This method will build an object of a given type with the given
+attributes, but also sets values such as the owner of the data.
+
+=cut
+
+method object($type, $data is HashRef) {
+    unless ($type =~ s/^\+//) {
+        $type = 'Bronze::Types::'.$type;
+    }
+    load $type;
+    unless ($data->{group} && first { $_ eq $data->{group} } $self->user->roles) {
+        $data->{group} = ($self->user->roles)[0];
+    }
+    return $type->new
+      ( %$data,
+        owner => $self->user->id );
+}
 
 =method search
 
@@ -19,15 +39,17 @@ simple hash. It also adds the security verification.
 
 =cut
 
-method search($filter is HashRef) does Transactional {
+method search($filter is HashRef) {
 
     my $permquery = Search::GIN::Query::Manual->new
       ( method => 'any',
         values =>
         { accessible =>
           [ 'any',
-            'u:'.$self->user->id,
-            map { 'g:'.$_ } $self->user->roles
+            $self->user ?
+            ( 'u:'.$self->user->id,
+              map { 'g:'.$_ } $self->user->roles
+            ):()
           ]
         }
       );
@@ -37,25 +59,11 @@ method search($filter is HashRef) does Transactional {
         values => $filter );
 
     my $finalquery = Search::GIN::Query::Set->new
-      ( operation => 'EXCEPT',
+      ( operation => 'INTERSECT',
         subqueries => [ $userquery, $permquery ] );
 
     return $self->schema->search($finalquery);
 
-}
-
-=method store
-
-This method is used to store data in the backend. If the owner,
-group and permissions are not set, sane defaults are set.
-
-=cut
-
-method store($object is Bronze::Types::Data) does Transactional {
-    $object->owner || $object->owner($self->user->id);
-    $object->group || $object->group( first { 1 } $self->user->roles );
-    $object->permissions || $object->permissions(0x644);
-    $self->schema->store($object);
 }
 
 

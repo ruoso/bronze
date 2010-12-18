@@ -102,7 +102,7 @@ integer so you should perform operations in octal, such as:
 =cut
 
 has permissions => ( is => 'rw',
-                     isa => 'Int' );
+                     default => 0644 );
 
 
 =back
@@ -123,12 +123,14 @@ sub EXTRACT {
     my $self = shift;
 
     my @accessible;
-    if ($self->permissions & 0400) {
+    if ($self->permissions & 0004) {
         push @accessible, 'any';
-    } elsif ($self->permissions & 0040) {
+    }
+    if ($self->group && $self->permissions & 0040) {
         push @accessible, 'g:'.$self->group;
-    } elsif ($self->permissions & 0004) {
-        push @accessible, 'u:'.$self->user;
+    }
+    if ($self->owner && $self->permissions & 0400) {
+        push @accessible, 'u:'.$self->owner;
     }
     return
       {

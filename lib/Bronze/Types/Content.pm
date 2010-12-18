@@ -85,6 +85,7 @@ sub EXTRACT {
        slug   => $self->slug,
        map { my $attr = $_;
              [ map { $_->system_name } $self->$attr->members ] }
+       grep { defined $self->$_ }
        qw(tags layout_tags categories),
       };
 }

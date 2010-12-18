@@ -3,6 +3,8 @@ package Bronze;
 use Moose;
 use KiokuDB;
 use KiokuDB::Backend::DBI;
+use Bronze::GIN;
+use Bronze::Model;
 use MooseX::Method::Signatures;
 use MooseX::Types::Moose qw(HashRef);
 use Module::Load;
@@ -63,7 +65,7 @@ a given user.
 
 =cut
 
-method model($user) {
+method model($user?) {
     Bronze::Model->new( schema => $self->schema,
                         user => $user );
 }

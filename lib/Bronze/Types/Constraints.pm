@@ -50,7 +50,7 @@ The states are: "draft", "ready", "published", "archived" and
 
 subtype PublishStatus,
   as Str,
-  where { /^(:draft|ready|published|archived)$/ },
+  where { /^(draft|ready|published|archived)$/ },
   message { "Invalid publish status" };
 
 
