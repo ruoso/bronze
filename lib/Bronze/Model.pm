@@ -1,15 +1,62 @@
 package Bronze::Model;
 # ABSTRACT: The Model class for Bronze applications
 use Moose;
-use Search::Gin::Query::Manual;
-use Search::Gin::Query::Set;
+use Search::GIN::Query::Manual;
+use Search::GIN::Query::Set;
 use MooseX::Method::Signatures;
-use aliased 'Moosex::Meta::Method::Transactional';
+use aliased 'MooseX::Meta::Method::Transactional';
 use namespace::clean -except => 'meta';
+use List::Util qw(first);
 
 has user    => ( is => 'ro', required => 1 );
-has kiokudb => ( is => 'ro', required => 1 );
+has schema  => ( is => 'ro', required => 1,
+                 handles => [qw(lookup new_scope)]);
 
+=method search
+
+This method encapsulates the building of the Search::GIN::Query in a
+simple hash. It also adds the security verification.
+
+=cut
+
+method search($filter is HashRef) does Transactional {
+
+    my $permquery = Search::GIN::Query::Manual->new
+      ( method => 'any',
+        values =>
+        { accessible =>
+          [ 'any',
+            'u:'.$self->user->id,
+            map { 'g:'.$_ } $self->user->roles
+          ]
+        }
+      );
+
+    my $userquery = Search::GIN::Query::Manual->new
+      ( method => 'all',
+        values => $filter );
+
+    my $finalquery = Search::GIN::Query::Set->new
+      ( operation => 'EXCEPT',
+        subqueries => [ $userquery, $permquery ] );
+
+    return $self->schema->search($finalquery);
+
+}
+
+=method store
+
+This method is used to store data in the backend. If the owner,
+group and permissions are not set, sane defaults are set.
+
+=cut
+
+method store($object is Bronze::Types::Data) does Transactional {
+    $object->owner || $object->owner($self->user->id);
+    $object->group || $object->group( first { 1 } $self->user->roles );
+    $object->permissions || $object->permissions(0x644);
+    $self->schema->store($object);
+}
 
 
 __PACKAGE__->meta->make_immutable;
@@ -46,16 +93,11 @@ This refers to the currently authenticated user. Bronze model will
 enforce the permission model on all objects accessed. It should
 support the "id" and "roles" method.
 
-=item kiokudb
+=item schema
 
 This refers to the kiokudb instance that should be used.
 
 =back
-
-=method search
-
-This method encapsulates the building of the Search::GIN::Query in a
-simple hash. It also adds the security verification.
 
 =back
 
